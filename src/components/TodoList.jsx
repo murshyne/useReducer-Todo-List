@@ -20,7 +20,10 @@ function TodoList({ todos, dispatch }) {
   return (
     <ul>
       {todos.map((todo) => (
-        <li key={todo.id} className={`todo-item ${todo.complete ? "completed" : ""}`}>
+        <li
+          key={todo.id}
+          className={`todo-item ${todo.complete ? "completed" : ""}`}
+        >
           {editTodoId === todo.id ? (
             <EditForm
               todo={todo}
@@ -29,15 +32,22 @@ function TodoList({ todos, dispatch }) {
             />
           ) : (
             <>
+              <input
+                type="checkbox"
+                checked={todo.complete}
+                onChange={() => handleComplete(todo.id)}
+              />
               <span className={`todo-text ${todo.complete ? "strikethrough" : ""}`}>
                 {todo.desc}
               </span>
               <div className="kebab-menu">
-                <button onClick={() => handleComplete(todo.id)} disabled={todo.complete}>
-                  {todo.complete ? "Completed" : "Mark as Complete"}
-                </button>
                 <button onClick={() => handleEdit(todo.id, todo.desc)}>Edit</button>
-                <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                <button
+                  onClick={() => handleDelete(todo.id)}
+                  disabled={!todo.complete}
+                >
+                  Delete
+                </button>
               </div>
             </>
           )}
