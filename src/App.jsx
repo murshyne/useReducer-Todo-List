@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useReducer, useState } from "react";
+import TodoList from "./components/TodoList";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const ACTIONS = {
+  ADD_TODO: "add_todo",
+  TOGGLE_COMPLETE: "toggle_complete",
+  DELETE_TODO: "delete_todo",
+  EDIT_TODO: "edit_todo",
+};
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function todoReducer(todos, action) {
+  switch (action.type) {
+    case ACTIONS.ADD_TODO:
+      return [{ id: Date.now(), desc: action.payload.desc, complete: false }, ...todos];
+    case ACTIONS.TOGGLE_COMPLETE:
+      return todos.map(todo =>
+        todo.id === action.payload.id ? { ...todo, complete: !todo.complete } : todo
+      );
+    case ACTIONS.DELETE_TODO:
+      return todos.filter(todo => todo.id !== action.payload.id);
+    case ACTIONS.EDIT_TODO:
+      return todos.map(todo =>
+        todo.id === action.payload.id ? { ...todo, desc: action.payload.desc } : todo
+      );
+    default:
+      return todos;
+  }
 }
 
-export default App
+function App() {
+  const [todos, dispatch] = useReducer(todoReducer, []);
+  const [newTodo, setNewTodo] = useState("");
+
+  const handleAddTodo = (desc) => {
+    if (desc.trim()) {
+      dispatch({ type: ACTIONS.ADD_TODO, payload: { desc } });
+      setNewTodo("");
+    }
+  };
+
+  return (
+    <div className="app">
+      <h1>Todo List</h1>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleAddTodo(newTodo);
+        }}
+      >
+        <input
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="What do you need to do?"
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      <TodoList todos={todos} dispatch={dispatch} />
+    </div>
+  );
+}
+
+export default App;
