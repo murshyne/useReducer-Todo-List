@@ -11,6 +11,8 @@ A simple Todo List application built using React. This application (was supposed
 - **Dynamic Theme**: Automatically switches between light and dark mode based on the system's theme preference.
 - **Accessibility**: Close the kebab menu by pressing the `ESC` key or clicking anywhere outside the menu.
 
+## Upcoming feature - Pop-up delete confirmation
+
 ## Technologies Used
 
 - React (with hooks like `useState`, `useEffect`, `useReducer` for state management)
