@@ -1,39 +1,35 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from "react";
 
-function EditForm({ todo, dispatch, setEditTodoId }) {
+const EditForm = ({ todo, onSave, onCancel }) => {
   const [newDesc, setNewDesc] = useState(todo.desc);
 
-  const handleChange = (e) => {
-    setNewDesc(e.target.value);
-  };
+  useEffect(() => {
+    setNewDesc(todo.desc); // Ensure the form is populated with the current value
+  }, [todo]);
 
-  const handleSave = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (newDesc.trim()) {
-      dispatch({
-        type: "edit_todo",
-        payload: { id: todo.id, desc: newDesc },
-      });
-      setEditTodoId(null); // Exit edit mode
+      onSave(todo.id, newDesc); // Save the changes
     }
   };
 
-  const handleCancel = () => {
-    setEditTodoId(null); // Exit edit mode without saving
-  };
-
   return (
-    <div>
+    <form onSubmit={handleSubmit} className="edit-form">
       <input
         type="text"
         value={newDesc}
-        onChange={handleChange}
+        onChange={(e) => setNewDesc(e.target.value)}
         placeholder="Edit todo"
       />
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleCancel}>Cancel</button>
-    </div>
+      <button type="submit">Save</button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
+    </form>
   );
-}
+};
 
 export default EditForm;
