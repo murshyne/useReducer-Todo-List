@@ -69,7 +69,7 @@ ul.todo-list {
 }
 
 .todo-item {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   padding: 15px;
   margin: 5px 0;
   border-radius: 5px;
@@ -79,16 +79,23 @@ ul.todo-list {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-.todo-item.completed {
+/* Apply strike-through effect only to the text (span) */
+.todo-item.completed span {
   text-decoration: line-through;
-  background-color: #e0e0e0;
+  color: #999; /* Optional: light gray color for completed tasks */
 }
 
+/* Completed Todo Styling */
+.todo-item.completed {
+  background-color: #e0e0e0; /* Optional: background color for completed tasks */
+}
+
+/* Button and Checkbox Styling */
 button, input[type="checkbox"] {
   margin-left: 10px;
 }
 
-/* Reverting the button styles to previous style */
+/* Button Styles */
 button {
   background-color: #6b6b6b;
   color: white;
@@ -114,8 +121,10 @@ button:hover:not(:disabled) {
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  position: relative;
 }
 
+/* Ensure Edit Form buttons are unaffected by the line-through */
 #editForm input {
   padding: 10px;
   font-size: 1rem;
@@ -174,4 +183,8 @@ button:hover:not(:disabled) {
 
 .menu-options button:disabled {
   background-color: #ddd;
+}
+
+.menu-options .delete-button {
+  background-color: red;
 }

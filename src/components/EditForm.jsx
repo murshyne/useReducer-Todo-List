@@ -1,18 +1,16 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 
 const EditForm = ({ todo, onSave, onCancel }) => {
   const [newDesc, setNewDesc] = useState(todo.desc);
 
   useEffect(() => {
-    setNewDesc(todo.desc); // Ensure the form is populated with the current value
+    setNewDesc(todo.desc);
   }, [todo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newDesc.trim()) {
-      onSave(todo.id, newDesc); // Save the changes
+      onSave(todo.id, newDesc);
     }
   };
 

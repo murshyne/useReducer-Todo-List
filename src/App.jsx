@@ -48,12 +48,12 @@ function App() {
 
   const handleAddTodo = (e) => {
     e.preventDefault();
-    if (!newTodo.trim()) return; // Do not add empty todos
+    if (!newTodo.trim()) return;
     dispatch({
       type: "ADD_TODO",
       payload: { desc: newTodo, complete: false },
     });
-    setNewTodo(""); // Reset input after adding
+    setNewTodo("");
   };
 
   return (

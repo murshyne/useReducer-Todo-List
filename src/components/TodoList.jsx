@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import EditForm from "./EditForm"; // Import the EditForm component
+import EditForm from "./EditForm";
 
 const TodoList = ({ todos, dispatch }) => {
   const [editingTodo, setEditingTodo] = useState(null);
@@ -17,7 +15,7 @@ const TodoList = ({ todos, dispatch }) => {
 
   const handleEditTodo = (id, newDesc) => {
     dispatch({ type: "EDIT_TODO", payload: { id, desc: newDesc } });
-    setEditingTodo(null); // Exit edit mode after saving
+    setEditingTodo(null);
   };
 
   return (
@@ -55,15 +53,16 @@ const TodoList = ({ todos, dispatch }) => {
                   <div className="menu-options">
                     <button
                       onClick={() => {
-                        setEditingTodo(todo); // Enable editing
-                        setShowMenu(null); // Hide the kebab menu
+                        setEditingTodo(todo);
+                        setShowMenu(null);
                       }}
                     >
                       Edit
                     </button>
                     <button
+                      className="delete-button"
                       onClick={() => handleDeleteTodo(todo.id)}
-                      disabled={!todo.complete} // Disable if not completed
+                      disabled={!todo.complete}
                     >
                       Delete
                     </button>
